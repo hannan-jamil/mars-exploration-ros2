@@ -1,0 +1,28 @@
+# Blender 4.3.1 MTL File: 'Martian_Sky.blend'
+# www.blender.org
+
+# Mars sky dome material
+
+newmtl Material.001
+
+# Strong ambient response: keeps the panorama visible around the dome
+Ka 1.000000 1.000000 1.000000
+
+# Bright but not fully white diffuse texture response
+Kd 1 1 1
+
+# No specular shine / no artificial bright spot
+Ks 0.000000 0.000000 0.000000
+Ns 1.000000
+
+# Keep this at zero: Gazebo's OBJ importer does not reliably use Ke as a texture emission map
+Ke 0.000000 0.000000 0.000000
+
+Ni 1.000000
+d 1.000000
+
+# Ambient + diffuse, without specular
+illum 1
+
+# Relative path from meshes/ to materials/textures/
+map_Kd /home/hannan/Downloads/MarsPanoramaEX.png

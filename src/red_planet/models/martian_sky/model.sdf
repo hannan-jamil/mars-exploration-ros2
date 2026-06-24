@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+
+<model name="martian_sky">
+
+  <static>true</static>
+
+  <link name="sky">
+
+    <visual name="sky_visual">
+    
+
+  <cast_shadows>false</cast_shadows>
+
+  <geometry>
+    <mesh>
+      <uri>model://martian_sky/meshes/mars_sky.obj</uri>
+    </mesh>
+  </geometry>
+
+  <!--<material>
+<material>
+  <ambient>0 0 0 1</ambient>
+  <diffuse>0 0 0 1</diffuse>
+  <specular>0 0 0 1</specular>
+  <emissive>1 1 1 1</emissive>
+</material>
+  </material> -->
+
+    </visual>
+
+  </link>
+
+</model>
+
+</sdf>

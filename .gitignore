@@ -1,0 +1,23 @@
+# ROS 2 build output
+build/
+install/
+log/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Editor settings
+.vscode/
+.idea/
+
+# Blender temporary / backup files
+*.blend1
+*.blend2
+*.blend@
+*.bak
+*~
+
+# Gazebo cache / temporary files
+.gz/
+
