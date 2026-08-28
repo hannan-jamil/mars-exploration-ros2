@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mars_dev:
+    build: .
+    container_name: mars_dev
+
+    stdin_open: true
+    tty: true
+
+    network_mode: host
+
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - .:/mars_ws
+
+    working_dir: /mars_ws
+
+    command: bash

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo reference="base_link">
+
+    <material>Gazebo/Silver</material>
+
+    <mu1>1.2</mu1>
+
+    <mu2>1.2</mu2>
+
+  </gazebo>
+
+  <gazebo reference="FL_link">
+    <mu1>2.0</mu1>
+    <mu2>2.0</mu2>
+  </gazebo>
+
+  <gazebo reference="FR_link">
+    <mu1>2.0</mu1>
+    <mu2>2.0</mu2>
+  </gazebo>
+
+  <gazebo reference="ML_link">
+    <mu1>2.0</mu1>
+    <mu2>2.0</mu2>
+  </gazebo>
+
+  <gazebo reference="MR_link">
+    <mu1>2.0</mu1>
+    <mu2>2.0</mu2>
+  </gazebo>
+
+  <gazebo reference="RL_link">
+    <mu1>2.0</mu1>
+    <mu2>2.0</mu2>
+  </gazebo>
+
+  <gazebo reference="RR_link">
+    <mu1>2.0</mu1>
+    <mu2>2.0</mu2>
+  </gazebo>
+
+</robot>

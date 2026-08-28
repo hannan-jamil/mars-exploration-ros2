@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+
+<robot
+    name="mars_rover"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- ====================================================== -->
+    <!-- Include Files                                           -->
+    <!-- ====================================================== -->
+
+    <xacro:include filename="$(find mars_rover)/urdf/properties.xacro"/>
+
+    <xacro:include filename="$(find mars_rover)/urdf/materials.xacro"/>
+
+    <xacro:include filename="$(find mars_rover)/urdf/inertials.xacro"/>
+    
+    <xacro:include filename="$(find mars_rover)/urdf/wheels.xacro"/>
+    
+    <xacro:include filename="$(find mars_rover)/urdf/gazebo.xacro"/>
+    
+    <xacro:include filename="$(find mars_rover)/urdf/ros2_control.xacro"/>
+
+    <!-- ====================================================== -->
+    <!-- Base Link                                               -->
+    <!-- ====================================================== -->
+
+<link name="base_link">
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://mars_rover/meshes/visual/Main_Body.obj"/>
+    </geometry>
+  </visual>
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://mars_rover/meshes/visual/Chassis.obj"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://mars_rover/meshes/collision/Main_Body.stl"/>
+    </geometry>
+  </collision>
+
+  <xacro:box_inertia
+    mass="${body_mass}"
+    x="${body_length}"
+    y="${body_width}"
+    z="${body_height}"/>
+
+</link>
+
+
+
+
+
+<link name="camera_link">
+
+    <visual>
+
+        <geometry>
+
+            <mesh filename="package://mars_rover/meshes/visual/ZED2i_Camera.obj"/>
+
+        </geometry>
+
+    </visual>
+
+</link>
+
+<joint
+
+name="camera_joint"
+
+type="fixed">
+
+<parent link="base_link"/>
+
+<child link="camera_link"/>
+
+<origin xyz="0 0 0"/>
+
+</joint>
+
+<link name="camera_optical_frame"/>
+
+<joint
+
+name="camera_optical_joint"
+
+type="fixed">
+
+<parent link="camera_link"/>
+
+<child link="camera_optical_frame"/>
+
+<origin
+
+xyz="0 0 0"
+
+rpy="-1.570796 0 -1.570796"/>
+
+</joint>
+
+
+
+<!-- ======================================================== -->
+<!-- Wheels -->
+<!-- ======================================================== -->
+
+<xacro:wheel
+
+wheel_name="FL"
+
+parent="base_link"
+
+wheel_mesh="FL_Wheel"
+
+motor_mesh="Motor_FL"
+
+x="${FL_x}"
+
+y="${FL_y}"
+
+z="${FL_z}"/>
+
+<xacro:wheel
+
+wheel_name="FR"
+
+parent="base_link"
+
+wheel_mesh="FR_Wheel"
+
+motor_mesh="Motor_FR"
+
+x="${FR_x}"
+
+y="${FR_y}"
+
+z="${FR_z}"/>
+
+<xacro:wheel
+
+wheel_name="ML"
+
+parent="base_link"
+
+wheel_mesh="ML_Wheel"
+
+motor_mesh="Motor_ML"
+
+x="${ML_x}"
+
+y="${ML_y}"
+
+z="${ML_z}"/>
+
+<xacro:wheel
+
+wheel_name="MR"
+
+parent="base_link"
+
+wheel_mesh="MR_Wheel"
+
+motor_mesh="Motor_MR"
+
+x="${MR_x}"
+
+y="${MR_y}"
+
+z="${MR_z}"/>
+
+<xacro:wheel
+
+wheel_name="RL"
+
+parent="base_link"
+
+wheel_mesh="RL_Wheel"
+
+motor_mesh="Motor_RL"
+
+x="${RL_x}"
+
+y="${RL_y}"
+
+z="${RL_z}"/>
+
+<xacro:wheel
+
+wheel_name="RR"
+
+parent="base_link"
+
+wheel_mesh="RR_Wheel"
+
+motor_mesh="Motor_RR"
+
+x="${RR_x}"
+
+y="${RR_y}"
+
+z="${RR_z}"/>
+
+
+
+</robot>
+
+

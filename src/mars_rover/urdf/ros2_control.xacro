@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<ros2_control name="MarsRoverSystem" type="system">
+
+<hardware>
+
+<plugin>gz_ros2_control/GazeboSimSystem</plugin>
+
+</hardware>
+
+<!-- LEFT -->
+
+<joint name="FL_joint">
+
+<command_interface name="velocity"/>
+
+<state_interface name="position"/>
+
+<state_interface name="velocity"/>
+
+</joint>
+
+<joint name="ML_joint">
+
+<command_interface name="velocity"/>
+
+<state_interface name="position"/>
+
+<state_interface name="velocity"/>
+
+</joint>
+
+<joint name="RL_joint">
+
+<command_interface name="velocity"/>
+
+<state_interface name="position"/>
+
+<state_interface name="velocity"/>
+
+</joint>
+
+<!-- RIGHT -->
+
+<joint name="FR_joint">
+
+<command_interface name="velocity"/>
+
+<state_interface name="position"/>
+
+<state_interface name="velocity"/>
+
+</joint>
+
+<joint name="MR_joint">
+
+<command_interface name="velocity"/>
+
+<state_interface name="position"/>
+
+<state_interface name="velocity"/>
+
+</joint>
+
+<joint name="RR_joint">
+
+<command_interface name="velocity"/>
+
+<state_interface name="position"/>
+
+<state_interface name="velocity"/>
+
+</joint>
+
+</ros2_control>
+
+</robot>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ================= BODY ================= -->
+
+  <xacro:property name="body_length" value="0.35"/>
+  <xacro:property name="body_width"  value="0.25"/>
+  <xacro:property name="body_height" value="0.18"/>
+
+  <xacro:property name="body_mass" value="7.5"/>
+
+  <!-- ================= WHEELS ================= -->
+
+  <xacro:property name="wheel_radius" value="0.0565"/>
+  <xacro:property name="wheel_width" value="0.056"/>
+  <xacro:property name="wheel_mass" value="0.35"/>
+
+  <!-- Wheel Coordinates -->
+
+  <xacro:property name="FL_x" value="0.092373"/>
+  <xacro:property name="FL_y" value="0.11249"/>
+  <xacro:property name="FL_z" value="0.063755"/>
+
+  <xacro:property name="FR_x" value="0.092373"/>
+  <xacro:property name="FR_y" value="-0.11309"/>
+  <xacro:property name="FR_z" value="0.063755"/>
+
+  <xacro:property name="ML_x" value="-0.048627"/>
+  <xacro:property name="ML_y" value="0.11249"/>
+  <xacro:property name="ML_z" value="0.063755"/>
+
+  <xacro:property name="MR_x" value="-0.048627"/>
+  <xacro:property name="MR_y" value="-0.11309"/>
+  <xacro:property name="MR_z" value="0.063755"/>
+
+  <xacro:property name="RL_x" value="-0.18863"/>
+  <xacro:property name="RL_y" value="0.11249"/>
+  <xacro:property name="RL_z" value="0.063755"/>
+
+  <xacro:property name="RR_x" value="-0.18863"/>
+  <xacro:property name="RR_y" value="-0.11309"/>
+  <xacro:property name="RR_z" value="0.063755"/>
+
+</robot>

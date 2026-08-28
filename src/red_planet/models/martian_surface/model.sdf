@@ -7,7 +7,7 @@
       <collision name='collision'>
         <geometry>
           <mesh>
-		        <uri>meshes/Martian_Surface2.obj</uri>
+		        <uri>meshes/Martian_Surface3.obj</uri>
           </mesh>
         </geometry>
       </collision>
@@ -15,7 +15,7 @@
         <cast_shadows>1</cast_shadows>
         <geometry>
           <mesh>
-		        <uri>meshes/Martian_Surface2.obj</uri>
+		        <uri>meshes/Martian_Surface3.obj</uri>
           </mesh>
         </geometry>
         <material>
