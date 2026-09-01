@@ -4,213 +4,608 @@
     name="mars_rover"
     xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- ====================================================== -->
-    <!-- Include Files                                           -->
-    <!-- ====================================================== -->
+  <!-- ========================================================= -->
+  <!-- Properties / materials / inertials / Gazebo / control      -->
+  <!-- ========================================================= -->
 
-    <xacro:include filename="$(find mars_rover)/urdf/properties.xacro"/>
-
-    <xacro:include filename="$(find mars_rover)/urdf/materials.xacro"/>
-
-    <xacro:include filename="$(find mars_rover)/urdf/inertials.xacro"/>
-    
-    <xacro:include filename="$(find mars_rover)/urdf/wheels.xacro"/>
-    
-    <xacro:include filename="$(find mars_rover)/urdf/gazebo.xacro"/>
-    
-    <xacro:include filename="$(find mars_rover)/urdf/ros2_control.xacro"/>
-
-    <!-- ====================================================== -->
-    <!-- Base Link                                               -->
-    <!-- ====================================================== -->
-
-<link name="base_link">
-
-  <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="package://mars_rover/meshes/visual/Main_Body.obj"/>
-    </geometry>
-  </visual>
-
-  <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="package://mars_rover/meshes/visual/Chassis.obj"/>
-    </geometry>
-  </visual>
-
-  <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="package://mars_rover/meshes/collision/Main_Body.stl"/>
-    </geometry>
-  </collision>
-
-  <xacro:box_inertia
-    mass="${body_mass}"
-    x="${body_length}"
-    y="${body_width}"
-    z="${body_height}"/>
-
-</link>
+  <xacro:include filename="$(find mars_rover)/urdf/properties.xacro"/>
+  <xacro:include filename="$(find mars_rover)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find mars_rover)/urdf/inertials.xacro"/>
+  <xacro:include filename="$(find mars_rover)/urdf/gazebo.xacro"/>
+  <xacro:include filename="$(find mars_rover)/urdf/ros2_control.xacro"/>
 
 
+  <!-- ========================================================= -->
+  <!-- BASE LINK                                                   -->
+  <!-- ========================================================= -->
+
+  <link name="base_link">
+
+    <!-- Main body -->
+
+   <visual>
+  <origin xyz="0 0 0"
+          rpy="0 0 1.57079632679"/>
+
+  <geometry>
+    <mesh filename="package://mars_rover/meshes/visual/Main_Body.obj"/>
+  </geometry>
+</visual>
+
+<visual>
+  <origin xyz="0 0 0"
+          rpy="0 0 1.57079632679"/>
+
+  <geometry>
+    <mesh filename="package://mars_rover/meshes/visual/Chassis.obj"/>
+  </geometry>
+</visual>
+
+    <!-- Main collision -->
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.57079632679"/>
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/collision/Main_Body.stl"/>
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia
+        mass="${body_mass}"
+        x="${body_length}"
+        y="${body_width}"
+        z="${body_height}"/>
+
+  </link>
 
 
+  <!-- ========================================================= -->
+  <!-- CAMERA                                                     -->
+  <!-- ========================================================= -->
 
-<link name="camera_link">
+  <link name="camera_link">
 
     <visual>
-
-        <geometry>
-
-            <mesh filename="package://mars_rover/meshes/visual/ZED2i_Camera.obj"/>
-
-        </geometry>
-
+      <origin xyz="0 0 0" rpy="0 0 1.57079632679"/>
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/ZED2i_Camera.obj"/>
+      </geometry>
     </visual>
+
+  </link>
+
+  <joint name="camera_joint"
+         type="fixed">
+
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 0"/>
+
+  </joint>
+
+
+  <link name="camera_optical_frame"/>
+
+  <joint name="camera_optical_joint"
+         type="fixed">
+
+    <parent link="camera_link"/>
+    <child link="camera_optical_frame"/>
+
+    <origin xyz="0 0 0"
+            rpy="-1.570796 0 -1.570796"/>
+
+  </joint>
+
+
+
+
+
+  <!-- ========================================================= -->
+  <!-- FRONT LEFT WHEEL                                            -->
+  <!-- ========================================================= -->
+<!-- ========================================================= -->
+<!-- FRONT LEFT MOTOR                                          -->
+<!-- ========================================================= -->
+
+<link name="FL_motor_link">
+
+  <visual>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 1.57079632679"/>
+
+    <geometry>
+      <mesh filename="package://mars_rover/meshes/visual/Motor_FL.obj"/>
+    </geometry>
+
+    <material name="Silver"/>
+
+  </visual>
 
 </link>
 
-<joint
 
-name="camera_joint"
+<joint name="FL_motor_joint"
+       type="fixed">
 
-type="fixed">
+  <parent link="base_link"/>
+  <child link="FL_motor_link"/>
 
-<parent link="base_link"/>
-
-<child link="camera_link"/>
-
-<origin xyz="0 0 0"/>
-
-</joint>
-
-<link name="camera_optical_frame"/>
-
-<joint
-
-name="camera_optical_joint"
-
-type="fixed">
-
-<parent link="camera_link"/>
-
-<child link="camera_optical_frame"/>
-
-<origin
-
-xyz="0 0 0"
-
-rpy="-1.570796 0 -1.570796"/>
+  <origin xyz="0.092373 0.11249 0.063755"
+          rpy="0 0 0"/>
 
 </joint>
 
 
+<!-- ========================================================= -->
+<!-- FRONT LEFT WHEEL                                          -->
+<!-- ========================================================= -->
 
-<!-- ======================================================== -->
-<!-- Wheels -->
-<!-- ======================================================== -->
+<link name="FL_wheel_link">
 
-<xacro:wheel
+<visual>
+  <origin xyz="0 0 0"
+          rpy="0 0 0"/>
 
-wheel_name="FL"
+  <geometry>
+    <mesh filename="package://mars_rover/meshes/visual/FL_Wheel.obj"/>
+  </geometry>
 
-parent="base_link"
-
-wheel_mesh="FL_Wheel"
-
-motor_mesh="Motor_FL"
-
-x="${FL_x}"
-
-y="${FL_y}"
-
-z="${FL_z}"/>
-
-<xacro:wheel
-
-wheel_name="FR"
-
-parent="base_link"
-
-wheel_mesh="FR_Wheel"
-
-motor_mesh="Motor_FR"
-
-x="${FR_x}"
-
-y="${FR_y}"
-
-z="${FR_z}"/>
-
-<xacro:wheel
-
-wheel_name="ML"
-
-parent="base_link"
-
-wheel_mesh="ML_Wheel"
-
-motor_mesh="Motor_ML"
-
-x="${ML_x}"
-
-y="${ML_y}"
-
-z="${ML_z}"/>
-
-<xacro:wheel
-
-wheel_name="MR"
-
-parent="base_link"
-
-wheel_mesh="MR_Wheel"
-
-motor_mesh="Motor_MR"
-
-x="${MR_x}"
-
-y="${MR_y}"
-
-z="${MR_z}"/>
-
-<xacro:wheel
-
-wheel_name="RL"
-
-parent="base_link"
-
-wheel_mesh="RL_Wheel"
-
-motor_mesh="Motor_RL"
-
-x="${RL_x}"
-
-y="${RL_y}"
-
-z="${RL_z}"/>
-
-<xacro:wheel
-
-wheel_name="RR"
-
-parent="base_link"
-
-wheel_mesh="RR_Wheel"
-
-motor_mesh="Motor_RR"
-
-x="${RR_x}"
-
-y="${RR_y}"
-
-z="${RR_z}"/>
+  <material name="Black"/>
+</visual>
 
 
+<collision>
+
+  <origin xyz="0 0 0"
+          rpy="0 0 1.57079632679"/>
+
+  <geometry>
+    <cylinder
+        radius="${wheel_radius}"
+        length="${wheel_width}"/>
+  </geometry>
+
+</collision>
+
+
+  <xacro:cylinder_inertia
+      mass="${wheel_mass}"
+      radius="${wheel_radius}"
+      length="${wheel_width}"/>
+
+</link>
+
+
+<!-- ========================================================= -->
+<!-- FRONT LEFT WHEEL JOINT                                    -->
+<!-- ========================================================= -->
+
+<joint name="FL_wheel_joint"
+       type="continuous">
+
+  <parent link="FL_motor_link"/>
+  <child link="FL_wheel_link"/>
+
+  <origin xyz="0 0 0"
+          rpy="0 0 1.57079632679"/>
+
+  <axis xyz="1 0 0"/>
+
+  <limit effort="30"
+         velocity="30"/>
+
+  <dynamics damping="0.1"
+            friction="0.1"/>
+
+</joint>
+
+
+
+  <!-- ========================================================= -->
+  <!-- FRONT RIGHT MOTOR / SUPPORT                                 -->
+  <!-- ========================================================= -->
+
+  <link name="FR_motor_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 1.57079632679 0"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_FR.obj"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="FR_motor_joint"
+         type="fixed">
+
+    <parent link="base_link"/>
+    <child link="FR_motor_link"/>
+
+    <origin xyz="0.092373 -0.11309 0.063755"
+            rpy="0 0 0"/>
+
+  </joint>
+
+
+  <link name="FR_wheel_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 0"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/FR_Wheel.obj"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"
+              rpy="0 1.57079632679 0"/>
+
+      <geometry>
+        <cylinder
+            radius="${wheel_radius}"
+            length="${wheel_width}"/>
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia
+        mass="${wheel_mass}"
+        radius="${wheel_radius}"
+        length="${wheel_width}"/>
+
+  </link>
+
+  <joint name="FR_wheel_joint"
+         type="continuous">
+
+    <parent link="FR_motor_link"/>
+    <child link="FR_wheel_link"/>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 1.57079632679"/>
+
+    <axis xyz="1 0 0"/>
+
+    <limit
+        effort="30"
+        velocity="30"/>
+
+    <dynamics
+        damping="0.1"
+        friction="0.1"/>
+
+  </joint>
+
+
+
+  <!-- ========================================================= -->
+  <!-- MIDDLE LEFT MOTOR / SUPPORT                                -->
+  <!-- ========================================================= -->
+
+  <link name="ML_motor_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 1.57079632679"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_ML.obj"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="ML_motor_joint"
+         type="fixed">
+
+    <parent link="base_link"/>
+    <child link="ML_motor_link"/>
+
+    <origin xyz="-0.048627 0.11249 0.063755"
+            rpy="0 0 0"/>
+
+  </joint>
+
+
+  <link name="ML_wheel_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 0"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/ML_Wheel.obj"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"
+              rpy="0 1.57079632679 0"/>
+
+      <geometry>
+        <cylinder
+            radius="${wheel_radius}"
+            length="${wheel_width}"/>
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia
+        mass="${wheel_mass}"
+        radius="${wheel_radius}"
+        length="${wheel_width}"/>
+
+  </link>
+
+  <joint name="ML_wheel_joint"
+         type="continuous">
+
+    <parent link="ML_motor_link"/>
+    <child link="ML_wheel_link"/>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 1.57079632679"/>
+
+    <axis xyz="1 0 0"/>
+
+    <limit
+        effort="30"
+        velocity="30"/>
+
+    <dynamics
+        damping="0.1"
+        friction="0.1"/>
+
+  </joint>
+
+
+
+  <!-- ========================================================= -->
+  <!-- MIDDLE RIGHT MOTOR / SUPPORT                               -->
+  <!-- ========================================================= -->
+
+  <link name="MR_motor_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 1.57079632679"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_MR.obj"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="MR_motor_joint"
+         type="fixed">
+
+    <parent link="base_link"/>
+    <child link="MR_motor_link"/>
+
+    <origin xyz="-0.048627 -0.11309 0.063755"
+            rpy="0 0 0"/>
+
+  </joint>
+
+
+  <link name="MR_wheel_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 0"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/MR_Wheel.obj"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"
+              rpy="0 1.57079632679 0"/>
+
+      <geometry>
+        <cylinder
+            radius="${wheel_radius}"
+            length="${wheel_width}"/>
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia
+        mass="${wheel_mass}"
+        radius="${wheel_radius}"
+        length="${wheel_width}"/>
+
+  </link>
+
+  <joint name="MR_wheel_joint"
+         type="continuous">
+
+    <parent link="MR_motor_link"/>
+    <child link="MR_wheel_link"/>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 1.57079632679"/>
+
+    <axis xyz="1 0 0"/>
+
+    <limit
+        effort="30"
+        velocity="30"/>
+
+    <dynamics
+        damping="0.1"
+        friction="0.1"/>
+
+  </joint>
+
+
+
+  <!-- ========================================================= -->
+  <!-- REAR LEFT MOTOR / SUPPORT                                  -->
+  <!-- ========================================================= -->
+
+  <link name="RL_motor_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 1.57079632679"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_RL.obj"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="RL_motor_joint"
+         type="fixed">
+
+    <parent link="base_link"/>
+    <child link="RL_motor_link"/>
+
+    <origin xyz="-0.18863 0.11249 0.063755"
+            rpy="0 0 0"/>
+
+  </joint>
+
+
+  <link name="RL_wheel_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 0"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/RL_Wheel.obj"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"
+              rpy="0 1.57079632679 0"/>
+
+      <geometry>
+        <cylinder
+            radius="${wheel_radius}"
+            length="${wheel_width}"/>
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia
+        mass="${wheel_mass}"
+        radius="${wheel_radius}"
+        length="${wheel_width}"/>
+
+  </link>
+
+  <joint name="RL_wheel_joint"
+         type="continuous">
+
+    <parent link="RL_motor_link"/>
+    <child link="RL_wheel_link"/>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 1.57079632679"/>
+
+    <axis xyz="1 0 0"/>
+
+    <limit
+        effort="30"
+        velocity="30"/>
+
+    <dynamics
+        damping="0.1"
+        friction="0.1"/>
+
+  </joint>
+
+
+
+  <!-- ========================================================= -->
+  <!-- REAR RIGHT MOTOR / SUPPORT                                 -->
+  <!-- ========================================================= -->
+
+  <link name="RR_motor_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 1.57079632679"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_RR.obj"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="RR_motor_joint"
+         type="fixed">
+
+    <parent link="base_link"/>
+    <child link="RR_motor_link"/>
+
+    <origin xyz="-0.18863 -0.11309 0.063755"
+            rpy="0 0 0"/>
+
+  </joint>
+
+
+  <link name="RR_wheel_link">
+
+    <visual>
+      <origin xyz="0 0 0"
+              rpy="0 0 0"/>
+
+      <geometry>
+        <mesh filename="package://mars_rover/meshes/visual/RR_Wheel.obj"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"
+              rpy="0 1.57079632679 0"/>
+
+      <geometry>
+        <cylinder
+            radius="${wheel_radius}"
+            length="${wheel_width}"/>
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia
+        mass="${wheel_mass}"
+        radius="${wheel_radius}"
+        length="${wheel_width}"/>
+
+  </link>
+
+  <joint name="RR_wheel_joint"
+         type="continuous">
+
+    <parent link="RR_motor_link"/>
+    <child link="RR_wheel_link"/>
+
+    <origin xyz="0 0 0"
+            rpy="0 0 1.57079632679"/>
+
+    <axis xyz="1 0 0"/>
+
+    <limit
+        effort="30"
+        velocity="30"/>
+
+    <dynamics
+        damping="0.1"
+        friction="0.1"/>
+
+  </joint>
 
 </robot>
-
-
