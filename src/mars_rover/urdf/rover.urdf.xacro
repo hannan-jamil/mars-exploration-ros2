@@ -4,9 +4,9 @@
     name="mars_rover"
     xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- ========================================================= -->
-  <!-- Properties / materials / inertials / Gazebo / control      -->
-  <!-- ========================================================= -->
+
+  <!-- Properties / materials / inertials / Gazebo / control  -->
+
 
   <xacro:include filename="$(find mars_rover)/urdf/properties.xacro"/>
   <xacro:include filename="$(find mars_rover)/urdf/materials.xacro"/>
@@ -15,9 +15,9 @@
   <xacro:include filename="$(find mars_rover)/urdf/ros2_control.xacro"/>
 
 
-  <!-- ========================================================= -->
-  <!-- BASE LINK                                                   -->
-  <!-- ========================================================= -->
+
+  <!-- BASE LINK  -->
+
 
   <link name="base_link">
 
@@ -28,8 +28,15 @@
           rpy="0 0 1.57079632679"/>
 
   <geometry>
-    <mesh filename="package://mars_rover/meshes/visual/Main_Body.obj"/>
+           <mesh
+    filename="package://mars_rover/meshes/visual/Main_Body.obj"
+    scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
   </geometry>
+  
+  <material name="BodyGrey">
+  <color rgba="0.35 0.35 0.35 1.0"/>
+</material>
+  
 </visual>
 
 <visual>
@@ -37,7 +44,9 @@
           rpy="0 0 1.57079632679"/>
 
   <geometry>
-    <mesh filename="package://mars_rover/meshes/visual/Chassis.obj"/>
+    <mesh
+    filename="package://mars_rover/meshes/visual/Chassis.obj"
+    scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
   </geometry>
 </visual>
 
@@ -46,7 +55,9 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 1.57079632679"/>
       <geometry>
-        <mesh filename="package://mars_rover/meshes/collision/Main_Body.stl"/>
+      <mesh
+    filename="package://mars_rover/meshes/collision/Main_Body.stl"
+    scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </collision>
 
@@ -59,16 +70,17 @@
   </link>
 
 
-  <!-- ========================================================= -->
-  <!-- CAMERA                                                     -->
-  <!-- ========================================================= -->
+
+  <!-- CAMERA  -->
+
 
   <link name="camera_link">
 
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.57079632679"/>
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/ZED2i_Camera.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/ZED2i_Camera.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -80,8 +92,10 @@
     <parent link="base_link"/>
     <child link="camera_link"/>
 
-    <origin xyz="0 0 0"
-            rpy="0 0 0"/>
+    <origin xyz="${0 * rover_scale}
+         ${0 * rover_scale}
+         ${0 * rover_scale}"
+    rpy="0 0 0"/>
 
   </joint>
 
@@ -100,15 +114,49 @@
   </joint>
 
 
+<!-- ZED 2i LEFT OPTICAL CENTER   -->
+
+
+<link name="zed_left_camera_link"/>
+
+<joint name="zed_left_camera_joint"
+       type="fixed">
+
+  <parent link="base_link"/>
+  <child link="zed_left_camera_link"/>
+
+<origin
+    xyz="${0.15518 * rover_scale}
+         ${-0.058794 * rover_scale}
+         ${0.18 * rover_scale}"
+    rpy="0 0 0"/>
+
+</joint>
 
 
 
-  <!-- ========================================================= -->
-  <!-- FRONT LEFT WHEEL                                            -->
-  <!-- ========================================================= -->
-<!-- ========================================================= -->
+<!-- ZED 2i RIGHT OPTICAL CENTER  -->
+
+
+<link name="zed_right_camera_link"/>
+
+<joint name="zed_right_camera_joint"
+       type="fixed">
+
+  <parent link="base_link"/>
+  <child link="zed_right_camera_link"/>
+
+<origin
+    xyz="${0.15518 * rover_scale}
+         ${0.061206 * rover_scale}
+         ${0.17269 * rover_scale}"
+    rpy="0 0 0"/>
+
+</joint>
+
+
 <!-- FRONT LEFT MOTOR                                          -->
-<!-- ========================================================= -->
+
 
 <link name="FL_motor_link">
 
@@ -118,10 +166,9 @@
             rpy="0 0 1.57079632679"/>
 
     <geometry>
-      <mesh filename="package://mars_rover/meshes/visual/Motor_FL.obj"/>
+      <mesh filename="package://mars_rover/meshes/visual/Motor_FL.obj"
+      scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
     </geometry>
-
-    <material name="Silver"/>
 
   </visual>
 
@@ -134,15 +181,16 @@
   <parent link="base_link"/>
   <child link="FL_motor_link"/>
 
-  <origin xyz="0.092373 0.11249 0.063755"
+  <origin xyz="${0.092373 * rover_scale}
+         ${0.11249 * rover_scale}
+         ${0.063755 * rover_scale}"
           rpy="0 0 0"/>
 
 </joint>
 
 
-<!-- ========================================================= -->
-<!-- FRONT LEFT WHEEL                                          -->
-<!-- ========================================================= -->
+<!-- FRONT LEFT WHEEL -->
+
 
 <link name="FL_wheel_link">
 
@@ -151,17 +199,17 @@
           rpy="0 0 0"/>
 
   <geometry>
-    <mesh filename="package://mars_rover/meshes/visual/FL_Wheel.obj"/>
+    <mesh filename="package://mars_rover/meshes/visual/FL_Wheel.obj"
+    scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
   </geometry>
 
-  <material name="Black"/>
 </visual>
 
 
 <collision>
 
   <origin xyz="0 0 0"
-          rpy="0 0 1.57079632679"/>
+          rpy="0 1.57079632679 0"/>
 
   <geometry>
     <cylinder
@@ -179,10 +227,8 @@
 
 </link>
 
+<!-- FRONT LEFT WHEEL JOINT -->
 
-<!-- ========================================================= -->
-<!-- FRONT LEFT WHEEL JOINT                                    -->
-<!-- ========================================================= -->
 
 <joint name="FL_wheel_joint"
        type="continuous">
@@ -205,18 +251,19 @@
 
 
 
-  <!-- ========================================================= -->
-  <!-- FRONT RIGHT MOTOR / SUPPORT                                 -->
-  <!-- ========================================================= -->
+
+  <!-- FRONT RIGHT MOTOR / SUPPORT  -->
+
 
   <link name="FR_motor_link">
 
     <visual>
       <origin xyz="0 0 0"
-              rpy="0 1.57079632679 0"/>
+              rpy="0 0 1.57079632679"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/Motor_FR.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_FR.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -228,8 +275,10 @@
     <parent link="base_link"/>
     <child link="FR_motor_link"/>
 
-    <origin xyz="0.092373 -0.11309 0.063755"
-            rpy="0 0 0"/>
+       <origin xyz="${0.092373 * rover_scale}
+         ${-0.11309 * rover_scale}
+         ${0.063755 * rover_scale}"
+          rpy="0 0 0"/>
 
   </joint>
 
@@ -241,7 +290,8 @@
               rpy="0 0 0"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/FR_Wheel.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/FR_Wheel.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -286,9 +336,9 @@
 
 
 
-  <!-- ========================================================= -->
-  <!-- MIDDLE LEFT MOTOR / SUPPORT                                -->
-  <!-- ========================================================= -->
+
+  <!-- MIDDLE LEFT MOTOR / SUPPORT -->
+
 
   <link name="ML_motor_link">
 
@@ -297,7 +347,8 @@
               rpy="0 0 1.57079632679"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/Motor_ML.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_ML.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -309,9 +360,11 @@
     <parent link="base_link"/>
     <child link="ML_motor_link"/>
 
-    <origin xyz="-0.048627 0.11249 0.063755"
-            rpy="0 0 0"/>
-
+      <origin xyz="${-0.048627 * rover_scale}
+         ${0.11249 * rover_scale}
+         ${0.063755 * rover_scale}"
+          rpy="0 0 0"/>
+          
   </joint>
 
 
@@ -322,7 +375,8 @@
               rpy="0 0 0"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/ML_Wheel.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/ML_Wheel.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -367,9 +421,9 @@
 
 
 
-  <!-- ========================================================= -->
-  <!-- MIDDLE RIGHT MOTOR / SUPPORT                               -->
-  <!-- ========================================================= -->
+
+  <!-- MIDDLE RIGHT MOTOR / SUPPORT  -->
+
 
   <link name="MR_motor_link">
 
@@ -378,7 +432,8 @@
               rpy="0 0 1.57079632679"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/Motor_MR.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_MR.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -390,8 +445,10 @@
     <parent link="base_link"/>
     <child link="MR_motor_link"/>
 
-    <origin xyz="-0.048627 -0.11309 0.063755"
-            rpy="0 0 0"/>
+         <origin xyz="${-0.048627 * rover_scale}
+         ${-0.11309 * rover_scale}
+         ${0.063755 * rover_scale}"
+          rpy="0 0 0"/>
 
   </joint>
 
@@ -403,7 +460,8 @@
               rpy="0 0 0"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/MR_Wheel.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/MR_Wheel.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -448,9 +506,9 @@
 
 
 
-  <!-- ========================================================= -->
-  <!-- REAR LEFT MOTOR / SUPPORT                                  -->
-  <!-- ========================================================= -->
+
+  <!-- REAR LEFT MOTOR / SUPPORT -->
+
 
   <link name="RL_motor_link">
 
@@ -459,7 +517,8 @@
               rpy="0 0 1.57079632679"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/Motor_RL.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_RL.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -470,9 +529,11 @@
 
     <parent link="base_link"/>
     <child link="RL_motor_link"/>
-
-    <origin xyz="-0.18863 0.11249 0.063755"
-            rpy="0 0 0"/>
+            
+           <origin xyz="${-0.18863 * rover_scale}
+         ${0.11249 * rover_scale}
+         ${0.063755 * rover_scale}"
+          rpy="0 0 0"/>
 
   </joint>
 
@@ -484,7 +545,8 @@
               rpy="0 0 0"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/RL_Wheel.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/RL_Wheel.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -529,9 +591,9 @@
 
 
 
-  <!-- ========================================================= -->
-  <!-- REAR RIGHT MOTOR / SUPPORT                                 -->
-  <!-- ========================================================= -->
+
+  <!-- REAR RIGHT MOTOR / SUPPORT -->
+
 
   <link name="RR_motor_link">
 
@@ -540,7 +602,8 @@
               rpy="0 0 1.57079632679"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/Motor_RR.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/Motor_RR.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -552,8 +615,10 @@
     <parent link="base_link"/>
     <child link="RR_motor_link"/>
 
-    <origin xyz="-0.18863 -0.11309 0.063755"
-            rpy="0 0 0"/>
+        <origin xyz="${-0.18863 * rover_scale}
+         ${-0.11309 * rover_scale}
+         ${0.063755 * rover_scale}"
+          rpy="0 0 0"/>
 
   </joint>
 
@@ -565,7 +630,8 @@
               rpy="0 0 0"/>
 
       <geometry>
-        <mesh filename="package://mars_rover/meshes/visual/RR_Wheel.obj"/>
+        <mesh filename="package://mars_rover/meshes/visual/RR_Wheel.obj"
+        scale="${rover_scale} ${rover_scale} ${rover_scale}"/>
       </geometry>
     </visual>
 
@@ -607,5 +673,208 @@
         friction="0.1"/>
 
   </joint>
+  
+<!-- ZED 2i LEFT CAMERA SENSOR  -->
+
+
+<gazebo reference="zed_left_camera_link">
+
+  <sensor
+      name="zed_left_camera"
+      type="camera">
+
+    <pose>0 0 0 0 0 0</pose>
+
+    <always_on>true</always_on>
+    <update_rate>15</update_rate>
+    <visualize>false</visualize>
+
+    <camera>
+
+      <horizontal_fov>1.7628</horizontal_fov>
+
+      <image>
+        <width>640</width>
+        <height>360</height>
+        <format>R8G8B8</format>
+      </image>
+
+      <clip>
+        <near>0.05</near>
+        <far>100.0</far>
+      </clip>
+
+    </camera>
+
+    <topic>/zed/zed_node/left/image_rect_color</topic>
+
+  </sensor>
+
+</gazebo>
+
+<!-- ZED 2i RIGHT CAMERA SENSOR  -->
+
+<gazebo reference="zed_right_camera_link">
+
+  <sensor
+      name="zed_right_camera"
+      type="camera">
+
+    <pose>0 0 0 0 0 0</pose>
+
+    <always_on>true</always_on>
+    <update_rate>15</update_rate>
+    <visualize>false</visualize>
+
+    <camera>
+
+      <horizontal_fov>1.7628</horizontal_fov>
+
+      <image>
+        <width>640</width>
+        <height>360</height>
+        <format>R8G8B8</format>
+      </image>
+
+      <clip>
+        <near>0.05</near>
+        <far>100.0</far>
+      </clip>
+
+    </camera>
+
+    <topic>/zed/zed_node/right/image_rect_color</topic>
+
+  </sensor>
+
+</gazebo>
+
+<gazebo>
+
+  <plugin
+      filename="gz-sim-diff-drive-system"
+      name="gz::sim::systems::DiffDrive">
+
+    <left_joint>FL_wheel_joint</left_joint>
+    <left_joint>ML_wheel_joint</left_joint>
+    <left_joint>RL_wheel_joint</left_joint>
+
+    <right_joint>FR_wheel_joint</right_joint>
+    <right_joint>MR_wheel_joint</right_joint>
+    <right_joint>RR_wheel_joint</right_joint>
+
+    <wheel_separation>0.22558</wheel_separation>
+    <wheel_radius>0.056689</wheel_radius>
+
+    <topic>/cmd_vel</topic>
+
+    <odom_topic>/odom</odom_topic>
+    <tf_topic>/tf</tf_topic>
+
+    <frame_id>odom</frame_id>
+    <child_frame_id>base_link</child_frame_id>
+
+    <odom_publish_frequency>30</odom_publish_frequency>
+
+  </plugin>
+
+</gazebo>
+
+
+<!--- LiDar ----> 
+
+<link name="lidar_link"/>
+
+<joint
+    name="lidar_joint"
+    type="fixed">
+
+  <parent link="base_link"/>
+  <child link="lidar_link"/>
+
+  <origin
+      xyz="0 0 ${0.116591928 * rover_scale}"
+      rpy="0 0 0"/>
+
+</joint>
+
+<gazebo reference="lidar_link">
+
+  <sensor name="robosense_rs16"
+          type="gpu_lidar">
+
+    <always_on>true</always_on>
+    <update_rate>5</update_rate>
+    <visualize>false</visualize>
+
+    <topic>/robosense</topic>
+
+    <gz_frame_id>lidar_link</gz_frame_id>
+
+    <ray>
+
+      <scan>
+
+        <horizontal>
+          <samples>720</samples>
+          <resolution>1</resolution>
+          <min_angle>-3.14159265359</min_angle>
+          <max_angle>3.14159265359</max_angle>
+        </horizontal>
+
+        <vertical>
+          <samples>16</samples>
+          <resolution>1</resolution>
+          <min_angle>-0.2617993878</min_angle>
+          <max_angle>0.2617993878</max_angle>
+        </vertical>
+
+      </scan>
+
+      <range>
+        <min>0.40</min>
+        <max>100.0</max>
+        <resolution>0.01</resolution>
+      </range>
+
+    </ray>
+
+  </sensor>
+
+</gazebo>
+
+
+<!--- IMU ----> 
+
+<link name="imu_link"/>
+
+<joint
+    name="imu_joint"
+    type="fixed">
+
+  <parent link="base_link"/>
+  <child link="imu_link"/>
+
+  <origin
+      xyz="0 0.001206 0.17269"
+      rpy="0 0 0"/>
+
+</joint>
+
+<gazebo reference="imu_link">
+
+  <sensor
+      name="rover_imu"
+      type="imu">
+
+    <always_on>true</always_on>
+    <update_rate>100</update_rate>
+    <visualize>true</visualize>
+
+    <topic>/imu/data</topic>
+
+  </sensor>
+
+</gazebo>
 
 </robot>

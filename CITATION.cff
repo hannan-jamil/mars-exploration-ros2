@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Mars Rover Simulation and Evaluation Framework"
+message: "If you use this repository in academic work, please cite the associated research publication and this repository."
+type: software
+
+authors:
+  - family-names: Jamil
+    given-names: Hannan
+
+abstract: >
+  ROS 2 and Ignition Gazebo simulation framework for evaluating
+  a six-wheeled rover in a Mars-inspired, physically interactive
+  environment with stereo vision, inertial sensing, and 3D LiDAR.
+
+keywords:
+  - Mars rover
+  - planetary robotics
+  - space robotics
+  - ROS 2
+  - Gazebo
+  - mobile sensing
+  - LiDAR
+  - stereo vision
+  - IMU
+  - simulation
+
+license: "NOASSERTION"

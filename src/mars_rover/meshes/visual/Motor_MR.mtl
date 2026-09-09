@@ -16,7 +16,7 @@ Ka 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd Steel Glossy_BaseColor.jpg
+map_Kd steel_glossy_basecolor.jpg
 map_Ks Steel Glossy_SpecularLevel.jpg
 map_Ns Steel Glossy_Roughness.jpg
 map_refl Steel Glossy_Metallic.jpg

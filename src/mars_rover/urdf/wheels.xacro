@@ -4,9 +4,8 @@
   <xacro:macro name="wheel"
                params="wheel_name parent wheel_mesh motor_mesh x y z">
 
-    <!-- ===================================================== -->
-    <!-- FIXED MOTOR LINK                                      -->
-    <!-- ===================================================== -->
+    <!-- FIXED MOTOR LINK  -->
+
 
     <link name="${wheel_name}_motor_link">
 
@@ -24,8 +23,6 @@
     </link>
 
 
-    <!-- Motor remains fixed to base_link.
-         Its mesh already contains its physical position. -->
 
     <joint name="${wheel_name}_motor_joint"
            type="fixed">
@@ -39,24 +36,13 @@
     </joint>
 
 
-    <!-- ===================================================== -->
-    <!-- WHEEL LINK                                            -->
-    <!-- ===================================================== -->
+    <!-- WHEEL LINK   -->
+
 
     <link name="${wheel_name}_wheel_link">
 
       <visual>
 
-        <!--
-          IMPORTANT:
-
-          The OBJ already contains its world/rover position.
-          The wheel link frame will now be placed at the axle
-          by the wheel joint below.
-
-          Therefore subtract the axle position here so the
-          visual stays exactly where it is.
-        -->
 
         <origin xyz="${-x} ${-y} ${-z}"
                 rpy="0 0 0"/>
@@ -96,9 +82,9 @@
     </link>
 
 
-    <!-- ===================================================== -->
-    <!-- ACTUAL WHEEL ROTATION JOINT                           -->
-    <!-- ===================================================== -->
+ 
+    <!-- WHEEL ROTATION JOINT  -->
+
 
     <joint name="${wheel_name}_wheel_joint"
            type="continuous">
@@ -106,16 +92,11 @@
       <parent link="${wheel_name}_motor_link"/>
       <child link="${wheel_name}_wheel_link"/>
 
-      <!--
-        THIS is the important change.
-
-        Put the wheel-link frame directly at the physical axle.
-      -->
 
       <origin xyz="${x} ${y} ${z}"
               rpy="0 0 0"/>
 
-      <!-- Your wheel's native axle is X -->
+      <!-- wheel's native axle is X -->
 
       <axis xyz="1 0 0"/>
 

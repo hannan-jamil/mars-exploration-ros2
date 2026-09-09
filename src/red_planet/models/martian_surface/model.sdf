@@ -1,32 +1,103 @@
-<?xml version='1.0'?>
+<?xml version="1.0"?>
 <sdf version="1.9">
-  <model name='Martian_Surface'>
+
+  <model name="Martian_Surface">
+
     <pose>0 0 0 0 0 0</pose>
-    <static>1</static>
-    <link name='link'>
-      <collision name='collision'>
+    <static>true</static>
+
+    <link name="link">
+
+
+      <!-- VISUAL  -->
+   
+
+      <visual name="visual">
+
+        <cast_shadows>true</cast_shadows>
+
         <geometry>
           <mesh>
-		        <uri>meshes/Martian_Surface3.obj</uri>
+            <uri>meshes/Martian_Surface3.obj</uri>
+            <scale>0.5 0.5 0.5</scale>
           </mesh>
         </geometry>
-      </collision>
-      <visual name='visual'>
-        <cast_shadows>1</cast_shadows>
-        <geometry>
-          <mesh>
-		        <uri>meshes/Martian_Surface3.obj</uri>
-          </mesh>
-        </geometry>
+
         <material>
+        
+        <!---- for different texture  
           <pbr>
             <metal>
-              <albedo_map>materials/textures/Martian_Sand.png</albedo_map>
+              <albedo_map>
+                materials/textures/Martian_Sand.png
+              </albedo_map>
+            </metal>
+          </pbr>  -->
+
+ 
+        
+        
+        <!-- Remove this if you're using above -->
+
+          <pbr>
+            <metal>
+
+              <!-- Blender diffuse texture -->
+              <albedo_map>
+                materials/textures/mars_albedo.png
+              </albedo_map>
+
+              <!-- Blender roughness texture -->
+              <roughness_map>
+                materials/textures/mars_roughness.png
+              </roughness_map>
+
+              <!-- Mars ground is not metallic -->
+              <metalness>0.0</metalness>
+
+              <!-- Blender normal map -->
+              <normal_map type="tangent">
+                materials/textures/mars_normal.png
+              </normal_map>
+
             </metal>
           </pbr>
+
           <diffuse>1 1 1 1</diffuse>
+
         </material>
+
       </visual>
+      
+          <diffuse>1 1 1 1</diffuse>
+ 
+
+
+      <!-- COLLISION  -->
+
+
+      <collision name="collision">
+
+        <geometry>
+          <mesh>
+            <uri>meshes/Martian_Surface_collision.stl</uri>
+            <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+
+      </collision>
+
     </link>
+
   </model>
+
 </sdf>

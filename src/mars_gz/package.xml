@@ -3,7 +3,7 @@
 <package format="3">
   <name>mars_gz</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Mars Gazebo Models</description>
   <maintainer email="hannanjamil.hj@gmail.com">hannan</maintainer>
   <license>TODO: License declaration</license>
 
