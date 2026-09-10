@@ -781,7 +781,7 @@
 </gazebo>
 
 
-<!--- LiDar ----> 
+<!-- LiDar --> 
 
 <link name="lidar_link"/>
 
@@ -844,7 +844,7 @@
 </gazebo>
 
 
-<!--- IMU ----> 
+<!-- IMU --> 
 
 <link name="imu_link"/>
 

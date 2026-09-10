@@ -25,43 +25,43 @@
 
         <material>
         
-        <!---- for different texture  
+        <!---- for different texture  -->
           <pbr>
             <metal>
               <albedo_map>
                 materials/textures/Martian_Sand.png
               </albedo_map>
             </metal>
-          </pbr>  -->
+          </pbr>  
 
  
         
         
-        <!-- Remove this if you're using above -->
+        <!-- comment this if you're using above 
 
           <pbr>
             <metal>
 
-              <!-- Blender diffuse texture -->
+              <!-- Blender diffuse texture 
               <albedo_map>
                 materials/textures/mars_albedo.png
               </albedo_map>
 
-              <!-- Blender roughness texture -->
+              <!-- Blender roughness texture 
               <roughness_map>
                 materials/textures/mars_roughness.png
               </roughness_map>
 
-              <!-- Mars ground is not metallic -->
+              <Mars ground is not metallic 
               <metalness>0.0</metalness>
 
-              <!-- Blender normal map -->
+               Blender normal map 
               <normal_map type="tangent">
                 materials/textures/mars_normal.png
               </normal_map>
 
             </metal>
-          </pbr>
+          </pbr> -->
 
           <diffuse>1 1 1 1</diffuse>
 
